@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html ng-app="nameApp">
+    <head>
+        <style>
+            .selected {
+                background-color:black;
+                color:white;
+                font-weight:bold;
+            }
+        </style>
+        <link href="css/bootstrap.min.css" rel="stylesheet" media="screen" />
+        <link href="css/bootstrap-theme.min.css" rel="stylesheet" media="screen"/> 
+        <script src="js/angular.js"></script>
+        <script src="js/twitter.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    </head>
+    <body  ng-controller="nameCtrl">
+        <h1>TWITTER APPLICATION</h1>
+        <label>TWITTER-USER API KEYS </label>
+
+        </br>
+        <input ng-model="AccountName" type="text"  placeholder="AccountName" class="form-control" required ></br>
+
+        <input ng-model="ConsumerKey" type="text"  placeholder="ConsumerKey" class="form-control"  required></br>
+
+        <input ng-model="ConsumerKeySecret" type="text" placeholder="ConsumerKeySecret" class="form-control" required></br>
+
+        <input ng-model="AccessToken" type="text"  placeholder="AccessToken" class="form-control" required></br>
+
+        <input ng-model="AccessTokenSecret" type="text" placeholder="AccessTokenSecret" class="form-control" required></br>
+        &nbsp;  &nbsp; 
+        <button ng-click = "sentPost()" class="btn btn-default">ENTER API KEYS</button> &nbsp; &nbsp; 
+        <select name="selectapi" ng-model="selectapi"  class="btn btn-mini">
+            <option value="">---Please select---</option> 
+            <option ng-repeat="option in datapi" value="{{option.accountName}}" ng-selected="selectname(selectapi)">{{option.accountName}}</option>
+        </select>
+        &nbsp;
+
+        <button ng-click = "refresh()" class="btn btn-default">GET TWITTER</button>
+        </br>
+        <table class="table table-bordered" >
+            </br>
+            <tr>
+                <th>TWIT ID</th>
+                <th>TWITTER USER</th>
+                <th>TWITTER TEXT</th>
+                <th>STATUS</th>
+            </tr>
+            <tr ng-repeat="item in Items" ng-class="{'selected':$index == selectedRow}">
+                <td>{{item.id}}</td>
+                <td>{{item.twitteruser}}</td>
+                <td>{{item.twittertext}}</td>
+                <td>
+
+                    <div >
+
+                        <label><input  type="radio" name="SGender" ng-click="setClickedRow($index)" ng-change="RadioChange('positive')" ng-model="value" value="positive" /> positive </label>
+                        <label><input  type="radio" name="SGender"  ng-click="setClickedRow($index)" ng-change="RadioChange('negative')" ng-model="value" value="negative" /> negative </label>
+                        <label><input  type="radio" name="SGender" ng-click="setClickedRow($index)" ng-change="RadioChange('inactive')" ng-model="value" value="inactive" /> inactive </label>
+                        <p>
+                            Selected Status: {{ value}}
+                        </p>
+
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <div>
+            selectedRow = {{selectedRow}}</br>
+            selectedApi = {{selectapi}}
+        </div>
+
+<div class="container">
+
+  <modal title="UPDATE TWITTER_USER API" visible="showModal">
+    <form role="form">
+    <p>Your Selected Api Profile Is Not Valid Please Update Is Selected Profile</p>
+      <h3>SelectedApi Profile = {{selectapi}}</h3>
+      <div class="form-group">
+        <label for="ConsumerKeyupdate">ConsumerKey</label>
+        <input type="text" class="form-control" id="ConsumerKeyupdate" ng-model="ConsumerKeyupdate" placeholder="ConsumerKey" />
+      </div>
+      <div class="form-group">
+        <label for="ConsumerSecretupdate">ConsumerSecret</label>
+        <input type="text" class="form-control" id="ConsumerSecretupdate" ng-model="ConsumerSecretupdate" placeholder="ConsumerSecret" />
+      </div>
+      <div class="form-group">
+        <label for="AccessTokenupdate">AccessToken</label>
+        <input type="text" class="form-control" id="AccessTokenupdate" ng-model="AccessTokenupdate" placeholder="AccessToken" />
+      </div>
+      <div class="form-group">
+        <label for="AccessTokenSecretupdate">AccessTokenSecret</label>
+        <input type="text" class="form-control" id="AccessTokenSecretupdate" ng-model="AccessTokenSecretupdate" placeholder="AccessTokenSecret" />
+      </div>
+      <button type="submit" ng-click = "updatePost()" class="btn btn-default">Submit</button>
+    </form>
+  </modal>
+</div>
+
+    </body>  
+</html>
