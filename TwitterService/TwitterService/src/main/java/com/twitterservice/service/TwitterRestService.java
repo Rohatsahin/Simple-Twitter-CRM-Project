@@ -36,14 +36,14 @@ public class TwitterRestService {
 
     @RequestMapping(value = "/rest/twit/list", method = RequestMethod.GET)
     public Iterable<TwitterDomain> listAllTwit() {
-        Iterable<TwitterDomain> customerLst = TwitterRepo.findAll();
+        Iterable<TwitterDomain> twitList = TwitterRepo.findAll();
         
-        return customerLst;
+        return twitList;
     }
 
     @RequestMapping(value = "/rest/twit/list/{id}/{status}", method = RequestMethod.GET)
     public TwitterDomain replaceTwit(@PathVariable("id") Long id, @PathVariable("status") String status) {
-        TwitterDomain customer = TwitterRepo.findOne(id);
+        TwitterDomain twitsave = TwitterRepo.findOne(id);
 
         String hibernatePropsFilePath = "C:\\Users\\rohat\\Documents\\NetBeansProjects\\TwitterService\\src\\main\\resources\\hibernate.cfg.xml";
         File hibernatePropsFile = new File(hibernatePropsFilePath);
@@ -55,18 +55,18 @@ public class TwitterRestService {
         Session session = sessionfactory.openSession();
         session.beginTransaction();
 
-        if ("".equals(customer.getStatus())) {
+        if ("".equals(twitsave.getStatus())) {
 
-            customer.setStatus(status);
-            TwitterRepo.save(customer);
-            session.save(customer);
+            twitsave.setStatus(status);
+            TwitterRepo.save(twitsave);
+            session.save(twitsave);
             session.getTransaction().commit();
             session.close();
 
         } else {
 
             Criteria criteria = session.createCriteria(TwitterDomain.class);
-            criteria.add(Restrictions.eq("twittertext", customer.getTwittertext()));
+            criteria.add(Restrictions.eq("twittertext", twitsave.getTwittertext()));
 
             TwitterDomain twitter = (TwitterDomain) criteria.uniqueResult();
             twitter.setStatus(status);
@@ -75,7 +75,7 @@ public class TwitterRestService {
             session.close();
 
         }
-        return customer;
+        return twitsave;
     }
 
     @RequestMapping(value = "/rest/time", method = RequestMethod.GET)
