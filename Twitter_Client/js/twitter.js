@@ -1,6 +1,6 @@
 var App = angular.module('nameApp',[]);
 
-App.controller('nameCtrl' ,function($scope,$http,$filter,$window){
+App.controller('nameCtrl', ['$scope','$http','$filter','$window',function($scope,$http,$filter,$window){
 
 
 $scope.url='http://localhost:8080/rest/twit/list';
@@ -52,6 +52,7 @@ method: "POST",
 data: JSON.stringify({"accountName":$scope.AccountName,"consumerKey":$scope.ConsumerKey,"consumerSecret":$scope.ConsumerKeySecret,"accessToken":$scope.AccessToken,"accessTokenSecret":$scope.AccessTokenSecret}),
 headers: {'Content-Type': 'application/json'}
 }).success(function (data, status, headers, config) {
+$window.location.reload();
 console.log(data); // assign  $scope.persons here as promise is resolved here 
 }).error(function (data, status, headers, config) {
 console.log(status + ' ' + headers);
@@ -93,7 +94,7 @@ $scope.selectname = function(name)
 $scope.select = name;  
 console.log(name);
 }
-});
+}]);
 
 
 
